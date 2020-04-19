@@ -18,6 +18,7 @@
  */
 
 using System;
+using System.Web.Security;
 using DotNetCasClient;
 
 namespace Restricted.AuthenticatedUsersOnly
@@ -28,8 +29,25 @@ namespace Restricted.AuthenticatedUsersOnly
         {
             if (CasAuthentication.ServiceTicketManager != null)
             {
+                FormsAuthenticationTicket formsAuthTicket = CasAuthentication.GetFormsAuthenticationTicket();
+                CasAuthenticationTicket casTicket = CasAuthentication.ServiceTicketManager.GetTicket(formsAuthTicket.UserData);
+
+                // Part B: loop over IEnumerable.
+                foreach (String key in casTicket.Assertion.Attributes.Keys)
+                {
+                    
+                    foreach (String value in casTicket.Assertion.Attributes[key])
+                    {
+                        System.Diagnostics.Debug.WriteLine(value);
+                        Div.InnerHtml += key + ": " + value;
+                        Div.InnerHtml += "<br />";
+                    }
+
+                }
+                
                 YourTickets.DataSource = CasAuthentication.ServiceTicketManager.GetUserServiceTickets(User.Identity.Name);
                 YourTickets.DataBind();
+                Div.DataBind();
             }
         }
     }
