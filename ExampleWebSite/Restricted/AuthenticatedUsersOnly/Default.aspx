@@ -22,6 +22,9 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder" Runat="Server">
     You are only able to see this page because you are an authenticated user (User.Identity.Name == <%= User.Identity.Name %>)
     <br /><br />
-    <strong>Here are CAS the ticket(s) currently assigned to you:</strong><br />
-    <asp:ListBox ID="YourTickets" runat="server" />
+    <strong>Here are CAS the ticket(s) currently assigned to you:</strong><br/>
+    <asp:ListBox ID="YourTickets" runat="server" /><br/><br/>
+
+    <strong>Here are you CAS attributes:</strong><br/>
+    <div runat="server" id="Div"></div>
 </asp:Content>
